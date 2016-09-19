@@ -25,14 +25,13 @@ export default function reducer(state=init, action) {
 			 });
 		case 'FINISH_EDIT_TODO':	
 		  	return state.map(t => {
-		    	if(t.get('id') === action.payload.id) {
-		    		let a = t.set('text',action.payload.text);
-		    		let b = t.update('editable', editable => !editable);
-		      		return a;
+		    	if (t.get('id') === action.payload.id) {
+		    		return t.update('editable', editable => !editable)
+		    			    .set('text', action.payload.text);
 		    	} else {
 		      		return t;
 				}
-			 });		
+			 });
 
 		case 'TOGGLE_TODO':
 		  	return state.map(t => {

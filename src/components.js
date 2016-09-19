@@ -42,14 +42,18 @@ export function MyInput (props){
 		}
 	}
 
-	const finishEditClick = (id,text) => event => finishEditTodo(id,text);
+	const finishEditClick = function(id) {
+		return event => {
+			finishEditTodo(id, event.target.value);
+		};
+	}
 
 	return (<input 
 		type="text" 
 		className="input" 
 		autoFocus={true}
 		
-		onBlur={finishEditClick(id,text)} 
+		onBlur={finishEditClick(id)} 
 		defaultValue={text} />);
 }
 

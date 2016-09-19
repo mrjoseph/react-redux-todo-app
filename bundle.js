@@ -23059,14 +23059,11 @@
 					}
 				});
 			case 'FINISH_EDIT_TODO':
-				console.log(state);
 				return state.map(function (t) {
 					if (t.get('id') === action.payload.id) {
-						var a = t.set('text', action.payload.text);
-						var b = t.update('editable', function (editable) {
+						return t.update('editable', function (editable) {
 							return !editable;
-						});
-						return a;
+						}).set('text', action.payload.text);
 					} else {
 						return t;
 					}
@@ -28185,9 +28182,10 @@
 			};
 		}
 
-		var finishEditClick = function finishEditClick(id, text) {
+		var finishEditClick = function finishEditClick(id) {
 			return function (event) {
-				return finishEditTodo(id, text);
+				console.log(event);
+				finishEditTodo(id, event.target.value);
 			};
 		};
 
@@ -28196,7 +28194,7 @@
 			className: "input",
 			autoFocus: true,
 
-			onBlur: finishEditClick(id, text),
+			onBlur: finishEditClick(id),
 			defaultValue: text });
 	}
 
