@@ -23054,6 +23054,21 @@
 						return t.update('editable', function (editable) {
 							return !editable;
 						});
+					} else {
+						return t;
+					}
+				});
+			case 'FINISH_EDIT_TODO':
+				console.log(state);
+				return state.map(function (t) {
+					if (t.get('id') === action.payload.id) {
+						var a = t.set('text', action.payload.text);
+						var b = t.update('editable', function (editable) {
+							return !editable;
+						});
+						return a;
+					} else {
+						return t;
 					}
 				});
 
@@ -28093,6 +28108,9 @@
 			},
 			editTodo: function editTodo(id) {
 				return dispatch((0, _actions.editTodo)(id));
+			},
+			finishEditTodo: function finishEditTodo(id, text) {
+				return dispatch((0, _actions.finishEditTodo)(id, text));
 			}
 		};
 	})(components.TodoList);
@@ -28112,6 +28130,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.MyInput = MyInput;
 	exports.Todo = Todo;
 	exports.RemoveBtn = RemoveBtn;
 	exports.TodoList = TodoList;
@@ -28122,31 +28141,77 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var MyInput = _react2.default.createClass({
-		displayName: "MyInput",
+	// var MyInput = React.createClass({
+	// 	getInitialState:function(){
+	// 		return {
+	// 			value : this.props.todo.text,
+	// 			todo : React
+	// 		}
+	// 	},
 
-		getInitialState: function getInitialState() {
+	// 	handleChange: function(evt) {
+	// 	    this.setState({
+	// 	     	value: evt.target.value
+	// 	    });
+	// 	 },
+	// 	 revertInput: function(){
+	// 	 	console.log(this)
+	// 		//const { editTodo } = this.props.foo;
+	// 		//const editClick = id => event => editTodo(todo.id);
+	// 	},
+	// 	render:  function(){
+
+	// 		return <input 
+	// 			type="text" 
+	// 			className="input" 
+	// 			autoFocus={true}
+	// 			ref="nameInput" 
+	// 			value={this.state.value} 
+	// 			onChange={this.handleChange} 
+	// 			onBlur={this.revertInput} />
+	// 	}
+	// });
+
+	function MyInput(props) {
+		var finishEditTodo = props.props.foo.finishEditTodo;
+		var _props$props$todo = props.props.todo;
+		var id = _props$props$todo.id;
+		var text = _props$props$todo.text;
+
+
+		function getInitialState() {
 			return {
-				value: this.props.todo.text
+				value: props.props.todo.text
 			};
-		},
-		handleChange: function handleChange(evt) {
-			this.setState({
-				value: evt.target.value
-			});
-		},
-		render: function render() {
-			console.log(this.props);
-			return _react2.default.createElement("input", { type: "text", value: this.state.value, onChange: this.handleChange });
 		}
-	});
+
+		var finishEditClick = function finishEditClick(id, text) {
+			return function (event) {
+				return finishEditTodo(id, text);
+			};
+		};
+
+		return _react2.default.createElement("input", {
+			type: "text",
+			className: "input",
+			autoFocus: true,
+
+			onBlur: finishEditClick(id, text),
+			defaultValue: text });
+	}
 
 	function Todo(props) {
 		var todo = props.todo;
+		var editTodo = props.foo.editTodo;
 
+		var editClick = function editClick(id) {
+			return function (event) {
+				return editTodo(todo.id);
+			};
+		};
 
 		if (todo.editable) {
-			return _react2.default.createElement(MyInput, { todo: todo });
+			return _react2.default.createElement(MyInput, { props: props });
 		} else {
 
 			if (todo.isDone) {
@@ -28158,7 +28223,8 @@
 			} else {
 				return _react2.default.createElement(
 					"span",
-					null,
+					{ className: "edit__click", onClick: editClick(todo.id) },
+					" ",
 					todo.text
 				);
 			}
@@ -28190,9 +28256,8 @@
 		var todos = props.todos;
 		var toggleTodo = props.toggleTodo;
 		var addTodo = props.addTodo;
-		var editTodo = props.editTodo;
 
-		console.log(props);
+
 		var onSubmit = function onSubmit(event) {
 			var input = event.target;
 			var text = input.value;
@@ -28211,15 +28276,10 @@
 			};
 		};
 
-		var editClick = function editClick(id) {
-			return function (event) {
-				return editTodo(id);
-			};
-		};
-
 		// const editClick = function editClick(){
 		// 	constsole.log('editing');
 		// }
+
 
 		return _react2.default.createElement(
 			"div",
@@ -28235,11 +28295,7 @@
 					return _react2.default.createElement(
 						"li",
 						{ key: t.get('id'), className: "todo__item" },
-						_react2.default.createElement(
-							"div",
-							{ className: "edit__click", onClick: editClick(t.get('id')) },
-							_react2.default.createElement(Todo, { todo: t.toJS() })
-						),
+						_react2.default.createElement(Todo, { todo: t.toJS(), foo: props }),
 						_react2.default.createElement(RemoveBtn, { foo: props, id: t.get('id') })
 					);
 				})
@@ -28262,6 +28318,7 @@
 	exports.toggleTodo = toggleTodo;
 	exports.removeTodo = removeTodo;
 	exports.editTodo = editTodo;
+	exports.finishEditTodo = finishEditTodo;
 	var uid = function uid() {
 	  return Math.random().toString(34).slice(2);
 	};
@@ -28293,9 +28350,20 @@
 	}
 
 	function editTodo(id) {
+
 	  return {
 	    type: 'EDIT_TODO',
 	    payload: id
+	  };
+	}
+
+	function finishEditTodo(id, text) {
+	  return {
+	    type: 'FINISH_EDIT_TODO',
+	    payload: {
+	      id: id,
+	      text: text
+	    }
 	  };
 	}
 

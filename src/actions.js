@@ -29,9 +29,20 @@ export function removeTodo(id){
 }
 
 export function editTodo(id){
+
 	return {
 		type : 'EDIT_TODO',
 		payload : id
 	}
+}
+
+export function finishEditTodo(id,text){
+  return {
+    type : 'FINISH_EDIT_TODO',
+    payload : {
+      id : id,
+      text : text
+    }
+  }
 }
 

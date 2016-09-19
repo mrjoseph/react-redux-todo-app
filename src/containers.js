@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import * as components from './components';
 
 //Our actions
-import { addTodo, toggleTodo, removeTodo, editTodo } from './actions';
+import { addTodo, toggleTodo, removeTodo, editTodo , finishEditTodo} from './actions';
 
 
 export const TodoList = connect(
@@ -20,7 +20,8 @@ export const TodoList = connect(
 			addTodo : text => dispatch(addTodo(text)),
 			toggleTodo : id => dispatch(toggleTodo(id)),
 			removeTodo : id => dispatch(removeTodo(id)),
-			editTodo : id => dispatch(editTodo(id))
+			editTodo : id => dispatch(editTodo(id)),
+			finishEditTodo : (id,text) => dispatch(finishEditTodo(id,text))
 		}
 	}
 )(components.TodoList);

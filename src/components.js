@@ -1,34 +1,74 @@
 import React from 'react';
 
-var MyInput = React.createClass({
-	getInitialState:function(){
-		return {
-			value : this.props.todo.text
-		}
-	},
-	handleChange: function(evt) {
-	    this.setState({
-	     	value: evt.target.value
-	    });
-	 },
-	render:  function(){
-		console.log(this.props);
-		return <input type="text" value={this.state.value} onChange={this.handleChange}/>
-	}
-});
+// var MyInput = React.createClass({
+// 	getInitialState:function(){
+// 		return {
+// 			value : this.props.todo.text,
+// 			todo : React
+// 		}
+// 	},
 
+// 	handleChange: function(evt) {
+// 	    this.setState({
+// 	     	value: evt.target.value
+// 	    });
+// 	 },
+// 	 revertInput: function(){
+// 	 	console.log(this)
+// 		//const { editTodo } = this.props.foo;
+// 		//const editClick = id => event => editTodo(todo.id);
+// 	},
+// 	render:  function(){
+		
+// 		return <input 
+// 			type="text" 
+// 			className="input" 
+// 			autoFocus={true}
+// 			ref="nameInput" 
+// 			value={this.state.value} 
+// 			onChange={this.handleChange} 
+// 			onBlur={this.revertInput} />
+// 	}
+// });
+
+export function MyInput (props){
+	const { finishEditTodo } = props.props.foo;
+	const { id,text } = props.props.todo;
+	
+	
+	function getInitialState(){
+		return {
+			value : props.props.todo.text,
+		}
+	}
+
+	const finishEditClick = (id,text) => event => finishEditTodo(id,text);
+
+	return (<input 
+		type="text" 
+		className="input" 
+		autoFocus={true}
+		
+		onBlur={finishEditClick(id,text)} 
+		defaultValue={text} />);
+}
 
 export function Todo(props){
+	
 	const { todo } = props;
+	const { editTodo } = props.foo;
+	const editClick = id => event => editTodo(todo.id);
+
+
 
 	if(todo.editable){
-		return <MyInput todo={todo}/>
+		return <MyInput props={props}/>
 	} else {
 
 		if(todo.isDone){
-			return <strike>{todo.text}</strike>
+			return  <strike>{todo.text}</strike> 
 		} else {
-			return <span>{todo.text}</span>
+			return <span className="edit__click" onClick={editClick(todo.id)}> {todo.text}</span> 
 		}
 	}
 
@@ -44,8 +84,8 @@ export function RemoveBtn(props){
 
 export function TodoList(props){
 
-	const { todos, toggleTodo, addTodo ,editTodo } = props;
-	console.log(props);
+	const { todos, toggleTodo, addTodo } = props;
+	
 	const onSubmit = (event) => {
     const input = event.target;
     const text = input.value;
@@ -60,12 +100,12 @@ export function TodoList(props){
 
 	const toggleClick = id => event => toggleTodo(id);
 
-	const editClick = id => event => editTodo(id);
 
 	// const editClick = function editClick(){
 	// 	constsole.log('editing');
 	// }
 	
+
 	return(
 		<div className='todo'>
 			<input type='text' 
@@ -76,9 +116,9 @@ export function TodoList(props){
 
 				{todos.map(t =>(
 					<li key={t.get('id')} className='todo__item'>
-						<div className="edit__click" onClick={editClick(t.get('id'))}>
-							<Todo todo={t.toJS()} />
-						</div>
+						
+						<Todo todo={t.toJS()} foo={props} />
+						
 						<RemoveBtn foo={props} id={t.get('id')}/>
 					</li>
 				))}
