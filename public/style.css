@@ -1,5 +1,5 @@
 html, body, input, button {
-  font-family: Sawasdee;
+  font-family: arial;
   font-size: 20px;
 }
 
@@ -17,10 +17,12 @@ html, body, input, button {
 }
 
 .remove__item{
-  position:absolute;
-  width:10%;
-  right:0;
+  float:right;
   cursor: pointer;
+    border: 1px solid #ccc;
+  padding: 2px;
+  border-radius: 2px;
+  margin:0 2px;
 }
 .todo__item:hover {
   background: #f7f7f7;
@@ -54,4 +56,16 @@ html, body, input, button {
 .edit__click{
   display:inline-block;
   cursor:pointer;
+}
+
+.toggle_todo{
+  display:inline-block;
+  float:right;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 2px;
+  border-radius: 2px;
+  margin:0 2px;
 }
