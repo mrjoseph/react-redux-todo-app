@@ -53,7 +53,8 @@ export function ToggleTodo(props){
 }
 
 export function TodoList(props){
-	const { todos, toggleTodo, addTodo } = props;
+	const { todos, toggleTodo, addTodo } = props.props;
+	const displayName = 'index';
 	const onSubmit = (event) => {
 	    const input = event.target;
 	    const text = input.value;
@@ -76,13 +77,32 @@ export function TodoList(props){
 				{todos.map(t =>(
 					<li key={t.get('id')} className='todo__item'>
 						
-						<Todo todo={t.toJS()} foo={props} />
+						<Todo todo={t.toJS()} foo={props.props} />
 						
-						<RemoveBtn foo={props} id={t.get('id')}/>
-						<ToggleTodo foo={props} id={t.get('id')}/>
+						<RemoveBtn foo={props.props} id={t.get('id')}/>
+						<ToggleTodo foo={props.props} id={t.get('id')}/>
 					</li>
 				))}
 			</ul>
 		</div>
 	);
 }
+
+class App extends React.Component {
+	constructor(props) {
+	    super(props);
+		this.displayName = 'Layout';
+    }
+	getChildContext() {
+	    return {
+			location: this.props.location
+	    }
+	}
+	render() {
+		return <TodoList props={this.props}/>;
+	}
+}
+App.childContextTypes = {
+    location: React.PropTypes.object
+}
+export default App

@@ -3,8 +3,9 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
 import ReactDomServer from 'react-dom/server';
-import reducer from './src/reducer';
-import { TodoList} from './src/containers';
+import { Router, Route, browserHistory ,indexRoute, match, RouterContext} from 'react-router';
+import reducer from './src/todo-app/reducer';
+import { TodoList } from './src/todo-app/containers';  
 
 
 
@@ -15,34 +16,44 @@ import { TodoList} from './src/containers';
  * @return {[type]}                 Return our html string
  */
 function renderFullPage(html, preloadedState){
+
 	return`<!doctype html>
 		    <html>
 		     	<head>
 		        	<title>Redux Universal Example</title>
-		        	<link rel="stylesheet" href="/style.css" />
+		        	<link rel="stylesheet" href="css/style.css" />
 		      	</head>
 		      	<body>
 		      		<h1>ToDo List</h1>
-		        	<div id="app">${html}</div>
+		        	<div id="app">
+		        		<div className="app-stuff-goes-here">${html}</div>
+		        	</div>
 		        	<script type="text/jsx">
 		        	
 		          		window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
 		        	</script>
-		        	<script src="/bundle.js"></script>
+		        	<script src="/js/bundle.js"></script>
 		      	</body>
 		    </html>`
 }
-//
+
 module.exports = function handleRender(req, res) { 
 	var store = createStore(reducer);
-	var html = ReactDomServer.renderToString(
-		<Provider store={store}>
-			<TodoList />
-		</Provider>
-	)
 	var preloadedState = store.getState();
-
-	// Send our html string, redux app and our initial state on our first load
-	res.send(renderFullPage(html, preloadedState))
-
+	
+	match({
+		routes : require('./routes.jsx'),
+		location : req.url
+	},function(error,redirectLocation,renderProps){
+		if(renderProps){
+			var html = ReactDomServer.renderToString(
+				<RouterContext  
+					{...renderProps} 
+					createElement={ function(Component,renderProps){ 
+						return <Component {...renderProps} store={store}/> 
+				}}/>
+			)
+			res.send(renderFullPage(html, preloadedState))
+		} 
+	});
 }

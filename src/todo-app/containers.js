@@ -5,7 +5,7 @@
 import { connect } from 'react-redux';
 
 //our current components
-import * as components from './components';
+import App from './components';
 
 //Our actions
 import { addTodo, toggleTodo, removeTodo, editTodo , finishEditTodo} from './actions';
@@ -24,4 +24,4 @@ export const TodoList = connect(
 			finishEditTodo : (id,text) => dispatch(finishEditTodo(id,text))
 		}
 	}
-)(components.TodoList);
+)(App); 

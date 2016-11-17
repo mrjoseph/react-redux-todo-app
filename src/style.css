@@ -2,7 +2,7 @@ html, body, input, button {
   font-family: arial;
   font-size: 20px;
 }
-
+ 
 .todo__list {
   margin: 0;
   padding: 0;
