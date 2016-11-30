@@ -12,8 +12,6 @@ export function addTodo(text) {
   };
 }
 
-
-
 export function toggleTodo(id) {
   return {
     type: 'TOGGLE_TODO',
@@ -46,3 +44,20 @@ export function finishEditTodo(id,text){
   }
 }
 
+export function decrement(num){
+  return {
+    type : 'DECREMENT',
+    payload : {
+      num : num
+    }
+  }
+}
+
+export function increment(num){
+  return {
+    type : 'INCREMENT',
+    payload : {
+      num : num
+    }
+  }
+}

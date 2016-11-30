@@ -1,4 +1,5 @@
 import React from 'react';
+if (process.env.BROWSER) require("../nav.css");  
 
 export function MyInput (props){
 	const { finishEditTodo } = props.props.foo;
@@ -54,6 +55,7 @@ export function ToggleTodo(props){
 
 export function TodoList(props){
 	const { todos, toggleTodo, addTodo } = props.props;
+	
 	const displayName = 'index';
 	const onSubmit = (event) => {
 	    const input = event.target;
@@ -74,7 +76,7 @@ export function TodoList(props){
 				onKeyDown={onSubmit} />
 			<ul className='todo__list'>
 
-				{todos.map(t =>(
+				{todos.reducer.map(t =>(
 					<li key={t.get('id')} className='todo__item'>
 						
 						<Todo todo={t.toJS()} foo={props.props} />
@@ -92,6 +94,7 @@ class App extends React.Component {
 	constructor(props) {
 	    super(props);
 		this.displayName = 'Layout';
+		
     }
 	getChildContext() {
 	    return {

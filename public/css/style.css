@@ -1,8 +1,23 @@
-html, body, input, button {
+.nav{
+
+}
+
+.nav li {
+  display:inline-block;
+}
+
+.nav li a{
+  text-decoration:none;
+  display:block;
+  padding:4px;
+}html, body, input, button {
   font-family: arial;
   font-size: 20px;
 }
  
+ .red {
+  backgroud : red;
+ }
 .todo__list {
   margin: 0;
   padding: 0;
@@ -68,4 +83,6 @@ html, body, input, button {
   padding: 2px;
   border-radius: 2px;
   margin:0 2px;
+}.counter_app{
+	text-align:center;
 }

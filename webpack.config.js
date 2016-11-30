@@ -2,7 +2,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var extractCSS = new ExtractTextPlugin('public/css/style.css', {allChunks: true});
 
 module.exports = {
-	entry : './src/client.js',
+	entry : './src/todo-app/client.js',
 	output : {
 		path: __dirname,
 		filename:'public/js/bundle.js'

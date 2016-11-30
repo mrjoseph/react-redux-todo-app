@@ -3,7 +3,6 @@
 // wrap around our components, so that we don't have to change our 
 // original implemantations
 import { connect } from 'react-redux';
-
 //our current components
 import App from './components';
 

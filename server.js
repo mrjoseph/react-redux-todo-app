@@ -1,12 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import ReactDomServer from 'react-dom/server';
 import { Router, Route, browserHistory ,indexRoute, match, RouterContext} from 'react-router';
-import reducer from './src/todo-app/reducer';
+import reducer ,{counterReducer} from './src/todo-app/reducer';
 import { TodoList } from './src/todo-app/containers';  
 
+const rootReducer = combineReducers({
+	reducer,
+	counterReducer
+});
+
+const store = createStore(rootReducer); 
 
 
 /**
@@ -38,7 +44,7 @@ function renderFullPage(html, preloadedState){
 }
 
 module.exports = function handleRender(req, res) { 
-	var store = createStore(reducer);
+	
 	var preloadedState = store.getState();
 	
 	match({

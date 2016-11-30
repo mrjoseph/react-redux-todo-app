@@ -1,11 +1,13 @@
 import { List, Map, fromJS } from 'immutable';
 
-const arr = [
+const toDoArray = [
 	{id : 0, isDone : true, text : 'make components'},
 	{id : 1, isDone : false, text : 'design actions'},
 	{id : 2, isDone : false, text : 'implement reducer'},
 	{id : 3, isDone : false, text : 'connect components'},
+	
 ];
+
 
 //convert our incoming data to immutable so it looks like this
 
@@ -15,7 +17,7 @@ const arr = [
 // 	Map({id : 2, isDone : false, text : 'implement reducer'}),
 // 	Map({id : 3, isDone : false, text : 'connect components'}),
 // ]);
-const init = fromJS(arr);
+const init = fromJS(toDoArray);
 
 
 //const init = List([]);
@@ -57,5 +59,20 @@ export default function reducer(state=init, action) {
 			 });
 		default:
 		  	return state;
+	}
+}
+
+const counts = 0;
+
+export const counterReducer = (state = counts, action) =>{
+	switch(action.type) {
+		case 'DECREMENT':
+			console.log('DECREMENT')
+			return state - 1;
+		case 'INCREMENT':
+			console.log('INCREMENT')
+			return state + 1;
+		default:
+			return state
 	}
 }
