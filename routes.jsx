@@ -1,22 +1,12 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
-import ReactDomServer from 'react-dom/server';
-import reducer, {counterReducer} from './src/todo-app/reducer';
 import { Router, Route, browserHistory ,IndexRoute, match, hashHistory} from 'react-router';
 import { TodoList } from './src/todo-app/containers'; 
 import Layout from './src/views/layout';
 import Contact from './src/views/contact';
 import Index from './src/views/index';
 import { CounterApp } from './src/counter/containers';
-
-const rootReducer = combineReducers({
-	reducer,
-	counterReducer
-});
-
-var store = createStore(rootReducer);
+import store from './src/combine-reducers';
 
 module.exports =  (
 	<Provider store={store}>

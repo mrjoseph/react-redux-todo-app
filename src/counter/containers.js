@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Counter from './components';
 
 //Our actions
-import { decrement,increment} from '../todo-app/actions';
+import { decrement,increment} from './actions';
 
 
 export const CounterApp = connect(

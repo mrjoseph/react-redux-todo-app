@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-if (process.env.BROWSER) require("../style.css"); 
+if (process.env.BROWSER) require("./style.css"); 
 
 class Nav extends React.Component {
 	render(){

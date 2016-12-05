@@ -1,18 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux'
 import ReactDomServer from 'react-dom/server';
 import { Router, Route, browserHistory ,indexRoute, match, RouterContext} from 'react-router';
-import reducer ,{counterReducer} from './src/todo-app/reducer';
-import { TodoList } from './src/todo-app/containers';  
-
-const rootReducer = combineReducers({
-	reducer,
-	counterReducer
-});
-
-const store = createStore(rootReducer); 
+import store from './src/combine-reducers';
 
 
 /**

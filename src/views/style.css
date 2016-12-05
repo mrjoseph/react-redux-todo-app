@@ -3,9 +3,9 @@ html, body, input, button {
   font-size: 20px;
 }
  
- .red {
-  backgroud : red;
- }
+h1{
+  text-align:center;
+}
 .todo__list {
   margin: 0;
   padding: 0;

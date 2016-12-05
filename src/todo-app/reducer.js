@@ -61,18 +61,3 @@ export default function reducer(state=init, action) {
 		  	return state;
 	}
 }
-
-const counts = 0;
-
-export const counterReducer = (state = counts, action) =>{
-	switch(action.type) {
-		case 'DECREMENT':
-			console.log('DECREMENT')
-			return state - 1;
-		case 'INCREMENT':
-			console.log('INCREMENT')
-			return state + 1;
-		default:
-			return state
-	}
-}
