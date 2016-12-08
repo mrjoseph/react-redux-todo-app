@@ -4,6 +4,7 @@ if (process.env.BROWSER) require("./style.css");
 class Increment extends React.Component {
 	constructor(props){
 		super(props)
+		console.log(props)
 		const { decrement,increment } = props.props;
 		this.state = {
 			disableInc : false,

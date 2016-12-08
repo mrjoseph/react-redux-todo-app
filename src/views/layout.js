@@ -11,6 +11,7 @@ class Nav extends React.Component {
 				<li><Link to="todo">Todo app</Link></li>
 				<li><Link to="contact">Contact</Link></li>
 				<li><Link to="counter">Counter</Link></li>
+				<li><Link to="link">Link</Link></li>
 			</ul>
 		)
 	}
