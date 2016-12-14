@@ -21,9 +21,7 @@ function renderFullPage(html, preloadedState){
 		      	</head>
 		      	<body>
 		      		<h1>ToDo List</h1>
-		        	<div id="app">
-		        		<div className="app-stuff-goes-here">${html}</div>
-		        	</div>
+		        		<div id="app" className="app-stuff-goes-here">${html}</div>
 		        	<script type="text/jsx">
 		        	
 		          		window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}

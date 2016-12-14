@@ -13,6 +13,7 @@ import { decrement,increment} from './actions';
 
 export const CounterApp = connect(
 	function mapStateToProps(state){
+		
 		return { count : state };
 	},
 	function mapDispatchtoProps(dispatch){

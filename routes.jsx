@@ -8,7 +8,6 @@ import Index from './src/views/index';
 import { CounterApp } from './src/counter/containers';
 import  Link from './src/jest-test/Link.react';
 import store from './src/combine-reducers';
-
 module.exports =  (
 	<Provider store={store}>
 		<Router history={browserHistory}>
