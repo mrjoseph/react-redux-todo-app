@@ -80,7 +80,6 @@ describe('Component: Counter button', () =>{
 		const {state,buttonInc,buttonDec } = setup();
 	
 		buttonInc.setProps({ counterValue: 10 });
-		buttonInc.setState({ foo: 'bar' });
 		
        	expect(buttonInc.html()).toEqual('<button class="buttons inc" disabled="">+</button>');
        
